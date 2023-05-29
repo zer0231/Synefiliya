@@ -2,4 +2,11 @@
     <string name="app_name">Synefiliya</string>
     <string name="title_activity_starter">StarterActivity</string>
     <string name="desc">"While investigating the murder of a family, Sheriff Sheldon and his team are puzzled with the discovery of the body of a stranger buried in the basement that does not fit to the crime scene. He brings the corpse of the beautiful Jane Doe late night to the coroner Tommy Tilden and requests to have the cause of death until the next morning to have an answer to the press. Tommy's son and assistant Austin Tilden is ready to go to the movie theater with his girlfriend Emma, but he decides to stay to help his father in the autopsy. Along the stormy and tragic night, they disclose weird and creepy secrets about Jane Doe.—Claudio Carvalho, Rio de Janeiro, Brazil"</string>
+    <string name="goto_youtube">goto youtube</string>
+    <string name="search_movies_here">Search movies here</string>
+    <string name="view_movie_result_here">View movie result here</string>
+    <string name="apply_filter_here">apply filter here</string>
+    <string name="download_link_here">download link here</string>
+    <string name="description">Description</string>
+    <string name="sorry_n_no_description_found">Sorry!!!,\n No description found</string>
 </resources>
