@@ -5,11 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.snackbar.Snackbar
+import com.zero.synefiliya.R
 import com.zero.synefiliya.databinding.FragmentDetailBinding
 import com.zero.synefiliya.fragments.detailFragment.adapters.CarouselAdapter
 import com.zero.synefiliya.fragments.detailFragment.models.MovieDetailAdditional
@@ -28,6 +31,9 @@ class DetailFragment : Fragment() {
     private var movieDetail: MutableLiveData<MovieDetailAdditional> = MutableLiveData()
     private var carouselUrls = ArrayList<String>()
     private lateinit var carouselAdapter: CarouselAdapter
+    val bookmarkAdd = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_add_24, null)
+    val bookmarkRemove =
+        ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_remove_24, null)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -55,7 +61,7 @@ class DetailFragment : Fragment() {
                     binding.titleTv.text = movieDetail.value!!.title
                     binding.ratingTv.text = movieDetail.value!!.rating.toString()
                     var genreString = ""
-                    for(i in movieDetail.value!!.genres.indices ){
+                    for (i in movieDetail.value!!.genres.indices) {
                         genreString += "${movieDetail.value!!.genres[i]},"
                     }
                     binding.genreTv.text = genreString.dropLast(1)
@@ -67,7 +73,20 @@ class DetailFragment : Fragment() {
                 }
             }
         }
+        val snack =
+            Snackbar.make(requireContext(), binding.root, "Undo", Snackbar.LENGTH_SHORT)
+        snack.setAction("Undo") {
 
+        }
+        binding.bookmarkIb.setOnClickListener {
+            if (binding.bookmarkIb.drawable == bookmarkAdd) {
+                binding.bookmarkIb.setImageDrawable(bookmarkRemove)
+                snack.show()
+            }else{
+                binding.bookmarkIb.setImageDrawable(bookmarkAdd)
+                snack.show()
+            }
+        }
         binding.descIb.setOnClickListener {
             showBottomSheet()
         }
