@@ -10,4 +10,5 @@
     <string name="description">Description</string>
     <string name="sorry_n_no_description_found">Sorry!!!,\n No description found</string>
     <string name="similar_movies">Similar movies</string>
+    <string name="genre">Genre</string>
 </resources>

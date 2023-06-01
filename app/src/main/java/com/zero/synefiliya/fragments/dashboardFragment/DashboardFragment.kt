@@ -32,7 +32,12 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
 
         binding.searchView.setupWithSearchBar(binding.searchbarSb)
-        binding.searchView.editText.setOnEditorActionListener { v, actionId, event ->
+        binding.searchView.editText.setOnKeyListener { v, keyCode, event ->
+            binding.searchView.editText
+            false
+        }
+        binding.searchView.editText.setOnEditorActionListener { _, _, _ -> //v, actionId, event
+            binding.searchView.hide()
             binding.searchbarSb.text = binding.searchView.text
             false
         }
