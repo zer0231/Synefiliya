@@ -1,5 +1,6 @@
 package com.zero.synefiliya.fragments.detailFragment
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -31,16 +32,17 @@ class DetailFragment : Fragment() {
     private var movieDetail: MutableLiveData<MovieDetailAdditional> = MutableLiveData()
     private var carouselUrls = ArrayList<String>()
     private lateinit var carouselAdapter: CarouselAdapter
-    val bookmarkAdd = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_add_24, null)
-    val bookmarkRemove =
-        ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_remove_24, null)
+    private lateinit var bookmarkAdd:Drawable
+    private lateinit var bookmarkRemove:Drawable
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         Log.d(TAG, args.movieId.toString())
-
+        bookmarkAdd = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_add_24, null)!!
+        bookmarkRemove =
+            ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_remove_24,null )!!
         detailVM.fetchMovieDetail(args.movieId)
         detailVM.movieDetail.observe(viewLifecycleOwner) { result ->
             when (result) {
@@ -71,19 +73,26 @@ class DetailFragment : Fragment() {
                 is NetworkResult.Error -> {
                     Log.d(TAG, result.message.toString())
                 }
+
             }
         }
-        val snack =
-            Snackbar.make(requireContext(), binding.root, "Undo", Snackbar.LENGTH_SHORT)
-        snack.setAction("Undo") {
 
-        }
         binding.bookmarkIb.setOnClickListener {
-            if (binding.bookmarkIb.drawable == bookmarkAdd) {
-                binding.bookmarkIb.setImageDrawable(bookmarkRemove)
-                snack.show()
-            }else{
+            if (binding.bookmarkIb.drawable == bookmarkRemove) {
                 binding.bookmarkIb.setImageDrawable(bookmarkAdd)
+                val snack =
+                    Snackbar.make(it, "Removed from bookmark", Snackbar.LENGTH_SHORT)
+                snack.setAction("Undo") {
+
+                }
+                snack.show()
+            } else {
+                binding.bookmarkIb.setImageDrawable(bookmarkRemove)
+                val snack =
+                    Snackbar.make(it, "Added to bookmark", Snackbar.LENGTH_SHORT)
+                snack.setAction("Undo") {
+
+                }
                 snack.show()
             }
         }
