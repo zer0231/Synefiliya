@@ -15,6 +15,12 @@ import javax.inject.Inject
 @ActivityRetainedScoped
 class DashboardRepository @Inject constructor(private val remoteDataSource: RemoteDataSource) :
     APIResponse() {
+    suspend fun getMovieListQuery(pageNumber: Int,searchQuery:String): Flow<NetworkResult<ListResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.getMoviesListQuery(pageNumber,searchQuery) })
+        }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun getMovieList(pageNumber: Int): Flow<NetworkResult<ListResponse>> {
         return flow {
             emit(safeApiCall { remoteDataSource.getMoviesList(pageNumber) })

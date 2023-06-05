@@ -23,16 +23,31 @@ class DashboardViewModel @Inject constructor(
 
     private val _movieList: MutableLiveData<NetworkResult<ListResponse>> =
         MutableLiveData()
-    val movieList: LiveData<NetworkResult<ListResponse>> = _movieList
+    val movieList: LiveData<NetworkResult<ListResponse>> get()  = _movieList
+
+    private val _movieListQuery: MutableLiveData<NetworkResult<ListResponse>> =
+        MutableLiveData()
+    val movieListQuery: LiveData<NetworkResult<ListResponse>> get()  = _movieListQuery
 
     fun fetchMovieList(pageNumber: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch{
            if(movieList.value == null){
                _movieList.postValue(NetworkResult.Loading())
                repository.getMovieList(pageNumber).collect {result ->
                    _movieList.postValue(result)
                }
            }
+        }
+    }
+
+    fun fetchMovieListQuery(pageNumber: Int,query:String){
+        viewModelScope.launch {
+
+                _movieList.postValue(NetworkResult.Loading())
+                repository.getMovieListQuery(pageNumber,query).collect {result ->
+                    _movieList.postValue(result)
+                }
+
         }
     }
 }
