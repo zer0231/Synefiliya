@@ -1,13 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Synefiliya" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:textColor">@color/polar_night_1</item>
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/frost_1</item>
+    </style>
+
+    <style name="constrain_background">
+        <item name="android:background">@color/frost_2</item>
+    </style>
+
+    <style name="fabTheme">
+
+        <item name="android:backgroundTint">@color/green</item>
+        <item name="iconTint">@color/snow_storm_3</item>
     </style>
 
     <style name="title_tv">
         <item name="android:textColor">@color/snow_storm_1</item>
         <item name="android:textSize">20sp</item>
     </style>
+
     <style name="Theme.Synefiliya" parent="Base.Theme.Synefiliya" />
 </resources>

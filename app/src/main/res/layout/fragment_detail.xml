@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent_constraint"
     android:layout_width="match_parent"
+    style="@style/constrain_background"
     android:layout_height="match_parent">
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="24dp"
+        style="@style/fabTheme"
         android:contentDescription="@string/download_link_here"
         app:icon="@drawable/ic_download_24"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,6 +39,7 @@
         app:layout_constraintGuide_percent=".92" />
 
     <androidx.viewpager2.widget.ViewPager2
+        android:padding="16dp"
         android:id="@+id/background_vp2"
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -67,8 +70,11 @@
         app:tint="@color/snow_storm_1" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:padding="10dp"
         android:id="@+id/title_tv"
         android:layout_width="wrap_content"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
         android:textSize="32sp"
@@ -78,8 +84,12 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/rating_tv"
+        android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
+        android:drawableTint="@color/yellow"
+        android:drawableEnd="@drawable/ic_star"
         android:layout_height="wrap_content"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/genre_tv"
         tools:text="rating" />
