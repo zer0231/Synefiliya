@@ -10,7 +10,8 @@ class RemoteDataSource @Inject constructor(
     private val userSharedPreference: SharedPreferenceUtil,
     private val apiService: APIService
 ) {
-    suspend fun getMoviesList() = apiService.getMoviesList(LIST)
+    suspend fun getMoviesList(pageNumber: Int) =  apiService.getMoviesList("$LIST$pageNumber")
+    suspend fun getMoviesListQuery(pageNumber: Int,searchQuery:String) = apiService.getMoviesList("$LIST$pageNumber&query_term=$searchQuery")
     suspend fun getMovieDetail(movieId: Int) = apiService.getMovieDetail(DETAIL + movieId)
     suspend fun getSimilarSuggestion(movieId: Int) =
         apiService.getSimilarSuggestion(SUGGESTIONS + movieId)

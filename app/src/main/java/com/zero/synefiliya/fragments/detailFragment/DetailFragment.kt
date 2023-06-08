@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
@@ -32,8 +33,8 @@ class DetailFragment : Fragment() {
     private var movieDetail: MutableLiveData<MovieDetailAdditional> = MutableLiveData()
     private var carouselUrls = ArrayList<String>()
     private lateinit var carouselAdapter: CarouselAdapter
-    private lateinit var bookmarkAdd:Drawable
-    private lateinit var bookmarkRemove:Drawable
+    private lateinit var bookmarkAdd: Drawable
+    private lateinit var bookmarkRemove: Drawable
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -42,7 +43,7 @@ class DetailFragment : Fragment() {
         Log.d(TAG, args.movieId.toString())
         bookmarkAdd = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_add_24, null)!!
         bookmarkRemove =
-            ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_remove_24,null )!!
+            ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_remove_24, null)!!
         detailVM.fetchMovieDetail(args.movieId)
         detailVM.movieDetail.observe(viewLifecycleOwner) { result ->
             when (result) {
@@ -52,6 +53,15 @@ class DetailFragment : Fragment() {
 
                 is NetworkResult.Success -> {
                     movieDetail.value = result.data?.data?.movie!!
+                    detailVM.isBookMarked(movieDetail.value?.id!!)
+                    detailVM.bookmark.observe(viewLifecycleOwner){result->
+                        if(result==false){
+                            binding.bookmarkIb.setImageDrawable(bookmarkAdd)
+                        }else{
+                            binding.bookmarkIb.setImageDrawable(bookmarkRemove)
+                        }
+                    }
+
                     carouselUrls.add(movieDetail.value!!.mediumScreenshotImage1.toString())
                     carouselUrls.add(movieDetail.value!!.mediumScreenshotImage2.toString())
                     carouselUrls.add(movieDetail.value!!.mediumScreenshotImage3.toString())
@@ -71,7 +81,7 @@ class DetailFragment : Fragment() {
                 }
 
                 is NetworkResult.Error -> {
-                    Log.d(TAG, result.message.toString())
+                    findNavController().navigate(R.id.errorFragment)
                 }
 
             }
@@ -79,19 +89,21 @@ class DetailFragment : Fragment() {
 
         binding.bookmarkIb.setOnClickListener {
             if (binding.bookmarkIb.drawable == bookmarkRemove) {
+                detailVM.removeFromBookMark(movieDetail.value!!)
                 binding.bookmarkIb.setImageDrawable(bookmarkAdd)
                 val snack =
                     Snackbar.make(it, "Removed from bookmark", Snackbar.LENGTH_SHORT)
                 snack.setAction("Undo") {
-
+                    detailVM.addToBookMark(movieDetail.value!!)
                 }
                 snack.show()
             } else {
                 binding.bookmarkIb.setImageDrawable(bookmarkRemove)
+                detailVM.addToBookMark(movieDetail.value!!)
                 val snack =
                     Snackbar.make(it, "Added to bookmark", Snackbar.LENGTH_SHORT)
                 snack.setAction("Undo") {
-
+                    detailVM.removeFromBookMark(movieDetail.value!!)
                 }
                 snack.show()
             }
@@ -116,6 +128,7 @@ class DetailFragment : Fragment() {
         }
         modalBottomSheet.show(parentFragmentManager, modalBottomSheet.tag)
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

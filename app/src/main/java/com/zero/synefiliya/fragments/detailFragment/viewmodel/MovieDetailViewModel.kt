@@ -24,9 +24,9 @@ class MovieDetailViewModel @Inject constructor(
         MutableLiveData()
     val movieDetail: LiveData<NetworkResult<DetailResponse>> = _movieDetail
 
-    private val _bookmark: MutableLiveData<List<MovieDetailAdditional>> =
+    private val _bookmark: MutableLiveData<Boolean> =
         MutableLiveData()
-    val bookmark: LiveData<List<MovieDetailAdditional>> = _bookmark
+    val bookmark: LiveData<Boolean> = _bookmark
 
 
     fun fetchMovieDetail(movieId: Int) {

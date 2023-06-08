@@ -33,7 +33,7 @@ class MovieDetailRepository @Inject constructor(
     suspend fun removeToBookMark(movie: MovieDetailAdditional) {
         movieDao.deleteMovie(movie)
     }
-    suspend fun isBookMarked(movieId: Int): List<MovieDetailAdditional> {
+    suspend fun isBookMarked(movieId: Int): Boolean {
       return movieDao.isBookmarked(movieId)
     }
 
