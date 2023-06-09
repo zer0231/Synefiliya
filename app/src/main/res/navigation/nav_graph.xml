@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.zero.synefiliya.fragments.detailFragment.DetailFragment"
+        android:label="DetailFragment"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="movieId"
+            android:defaultValue="6969"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.zero.synefiliya.fragments.dashboardFragment.DashboardFragment"
+        android:label="DashboardFragment"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_dashboardFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_bookMarkFragment"
+            app:destination="@id/bookMarkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/errorFragment"
+        android:name="com.zero.synefiliya.fragments.errorFragment.ErrorFragment"
+        android:label="ErrorFragment"
+        tools:layout="@layout/fragment_error" />
+    <fragment
+        android:id="@+id/bookMarkFragment"
+        android:name="com.zero.synefiliya.fragments.bookmarkFragment.BookMarkFragment"
+        android:label="BookMarkFragment"
+        tools:layout="@layout/fragment_bookmark" />
+</navigation>
